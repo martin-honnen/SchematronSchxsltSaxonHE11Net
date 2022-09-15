@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SchematronSchxsltSaxonHE11Net": {
+      "commandName": "Project",
+      "commandLineArgs": "price.sch\r\nbooks.xml"
+    }
+  }
+}
