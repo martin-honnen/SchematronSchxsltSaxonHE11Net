@@ -33,15 +33,21 @@ namespace SchematronSchxsltSaxonHE11Net
             var processor = new Processor(false);
 
             var xsltCompiler = processor.newXsltCompiler();
-            xsltCompiler.setResourceResolver(new JarResolver());
 
-            var compiledSchxslt = xsltCompiler.compile(xsltCompiler.getResourceResolver().resolve(new ResourceRequest() { baseUri = "schxslt", relativeUri = schxsltSvrlXsltResource })).load30();
+            var jarResolver = new JarResolver();
+
+            xsltCompiler.setResourceResolver(jarResolver);
+
+            var compiledSchxslt = xsltCompiler.compile(jarResolver.resolve(new ResourceRequest() { baseUri = "schxslt", relativeUri = schxsltSvrlXsltResource })).load30();
 
             var compiledSchematron = new XdmDestination();
+            compiledSchematron.setBaseURI(new Uri(args[0]).ToURI());
 
             compiledSchxslt.Transform(new FileInfo(args[0]), compiledSchematron);
 
-            var schematronValidator = xsltCompiler.compile(compiledSchematron.getXdmNode().asSource()).load30();
+            var xsltCompiler2 = processor.newXsltCompiler();
+
+            var schematronValidator = xsltCompiler2.compile(compiledSchematron.getXdmNode().asSource()).load30();
 
             var svrlResult = new XdmDestination();
 
