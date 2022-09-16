@@ -2,6 +2,7 @@
 using net.liberty_development.SaxonHE11s9apiExtensions;
 using System.Reflection;
 using System.Diagnostics;
+using net.sf.saxon.lib;
 
 namespace SchematronSchxsltSaxonHE11Net
 {
@@ -32,9 +33,9 @@ namespace SchematronSchxsltSaxonHE11Net
             var processor = new Processor(false);
 
             var xsltCompiler = processor.newXsltCompiler();
-            xsltCompiler.setURIResolver(new JarResolver());
+            xsltCompiler.setResourceResolver(new JarResolver());
 
-            var compiledSchxslt = xsltCompiler.compile(xsltCompiler.getURIResolver().resolve(schxsltSvrlXsltResource, "schxslt")).load30();
+            var compiledSchxslt = xsltCompiler.compile(xsltCompiler.getResourceResolver().resolve(new ResourceRequest() { baseUri = "schxslt", relativeUri = schxsltSvrlXsltResource })).load30();
 
             var compiledSchematron = new XdmDestination();
 

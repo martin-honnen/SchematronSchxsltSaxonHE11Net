@@ -1,48 +1,53 @@
-﻿using javax.xml.transform;
+﻿using com.sun.xml.@internal.rngom.parse.host;
+using javax.xml.transform;
 using javax.xml.transform.stream;
+using net.sf.saxon.lib;
 using JURI = java.net.URI;
 using JURL = java.net.URL;
 
 namespace SchematronSchxsltSaxonHE11Net
 {
-    internal class JarResolver : URIResolver
+    internal class JarResolver : ResourceResolver
     {
         private readonly org.xmlresolver.Resolver resolver = new org.xmlresolver.Resolver();
-        public Source resolve(string href, string @base)
+
+        public Source resolve(ResourceRequest request)
         {
-            JURI baseUri;
-            JURI hrefUri;
+            string relativeUri = request.relativeUri;
+            string baseUri = request.baseUri;
 
-            if (@base == null || @base == String.Empty)
+            JURI baseURI;
+            JURI hrefURI;
+
+            if (baseUri == null || baseUri == String.Empty)
             {
-                baseUri = new JURI("");
+                baseURI = new JURI("");
             }
             else
             {
-                baseUri = new JURI(@base.Substring(1 + @base.IndexOf("!")));
+                baseURI = new JURI(baseUri.Substring(1 + baseUri.IndexOf("!")));
             }
 
-            if (href == String.Empty)
+            if (relativeUri == String.Empty)
             {
-                hrefUri = baseUri;
+                hrefURI = baseURI;
             }
             else
             {
-                hrefUri = baseUri.resolve(href);
+                hrefURI = baseURI.resolve(relativeUri);
             }
 
             java.lang.Class clazz = typeof(JarResolver);
-            JURL systemId = clazz.getResource(hrefUri.toString());
+            JURL systemId = clazz.getResource(hrefURI.toString());
 
             if (systemId != null)
             {
-                Source source = new StreamSource(clazz.getResourceAsStream(hrefUri.toString()));
+                Source source = new StreamSource(clazz.getResourceAsStream(hrefURI.toString()));
                 source.setSystemId(systemId.toString());
-
                 return source;
             }
 
-            return resolver.resolve(href, @base);
+            return resolver.resolve(relativeUri, baseUri);
         }
     }
 }
