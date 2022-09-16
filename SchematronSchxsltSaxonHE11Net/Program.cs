@@ -41,7 +41,7 @@ namespace SchematronSchxsltSaxonHE11Net
             var compiledSchxslt = xsltCompiler.compile(jarResolver.resolve(new ResourceRequest() { baseUri = "schxslt", relativeUri = schxsltSvrlXsltResource })).load30();
 
             var compiledSchematron = new XdmDestination();
-            compiledSchematron.setBaseURI(new Uri(args[0]).ToURI());
+            compiledSchematron.setBaseURI(new Uri(new FileInfo(args[0]).FullName).ToURI());
 
             compiledSchxslt.Transform(new FileInfo(args[0]), compiledSchematron);
 
