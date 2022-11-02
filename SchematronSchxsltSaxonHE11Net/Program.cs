@@ -12,7 +12,7 @@ namespace SchematronSchxsltSaxonHE11Net
 
         static void Main(string[] args)
         {
-            Console.WriteLine($"Schematron Schxslt Validator using Schxslt 1.9.2 and Saxon HE 11.4 under {Environment.Version} {Environment.OSVersion}");
+            Console.WriteLine($"Schematron Schxslt Validator using Schxslt 1.9.4 and Saxon HE 11.4 under {Environment.Version} {Environment.OSVersion}");
 
             if (args.Length != 2)
             {
