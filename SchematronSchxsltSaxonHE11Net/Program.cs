@@ -1,8 +1,10 @@
-﻿using net.sf.saxon.s9api;
+﻿using System;
+using net.sf.saxon.s9api;
 using net.liberty_development.SaxonHE11s9apiExtensions;
 using System.Reflection;
 using System.Diagnostics;
 using net.sf.saxon.lib;
+using System.IO;
 
 namespace SchematronSchxsltSaxonHE11Net
 {

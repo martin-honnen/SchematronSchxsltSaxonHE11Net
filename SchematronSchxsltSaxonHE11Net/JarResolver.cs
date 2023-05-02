@@ -1,4 +1,5 @@
-﻿using javax.xml.transform;
+﻿using System;
+using javax.xml.transform;
 using javax.xml.transform.stream;
 using net.sf.saxon.lib;
 using JURI = java.net.URI;
